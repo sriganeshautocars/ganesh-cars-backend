@@ -20,8 +20,38 @@ export const login = async (req, res) => {
             expiresIn: "1d",
         });
 
-        res.json({ token });
+        res.cookie("auth_token", token, { httpOnly: true, secure: false, sameSite: 'lax', maxAge: 24 * 60 * 60 * 1000 });
+        res.json({ message: "Login successful", token });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 };
+
+export const logout = (req, res) => {
+    res.clearCookie("auth_token", { httpOnly: true, secure: process.env.NODE_ENV === "production" });
+    res.json({ message: "Logout successful" });
+};
+
+export const checkAuth = (req, res) => {
+    const token = req.cookies.auth_token;
+
+    // No cookie → not logged in
+    if (!token) {
+        return res.json({ loggedIn: false });
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        return res.json({
+            loggedIn: true,
+            user: {
+                id: decoded.id,
+                email: decoded.email,
+            }
+        });
+    } catch (err) {
+        return res.json({ loggedIn: false });
+    }
+};
+
