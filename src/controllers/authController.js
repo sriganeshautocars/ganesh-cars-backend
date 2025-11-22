@@ -5,6 +5,9 @@ import { comparePassword } from "../utils/hash.js";
 
 dotenv.config();
 
+const isProd = process.env.NODE_ENV === "production";
+const cookieDomain = process.env.COOKIE_DOMAIN || undefined;
+
 export const login = async (req, res) => {
     const { username, password } = req.body;
 
@@ -20,7 +23,7 @@ export const login = async (req, res) => {
             expiresIn: "1d",
         });
 
-        res.cookie("auth_token", token, { httpOnly: true, secure: false, sameSite: 'lax', maxAge: 24 * 60 * 60 * 1000 });
+        res.cookie("auth_token", token, { httpOnly: true, secure: isProd, sameSite: isProd ? 'none' : 'lax', domain: cookieDomain, maxAge: 24 * 60 * 60 * 1000 });
         res.json({ message: "Login successful", token });
     } catch (err) {
         res.status(500).json({ error: err.message });
