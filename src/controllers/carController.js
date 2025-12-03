@@ -36,7 +36,32 @@ export const addCar = async (req, res) => {
 
 export const getCars = async (req, res) => {
     try {
-        const result = await pool.query("SELECT * FROM cars ORDER BY created_at DESC");
+        const result = await pool.query(`
+            SELECT
+                id,
+                thumbnail,
+                brand,
+                name,
+                variant,
+                km_driven,
+                fuel_type,
+                body_type,
+                transmission_type,
+                price,
+                location,
+                insurance,
+                no_of_seats,
+                reg_number,
+                ownership,
+                engine_displacement,
+                highway_mileage,
+                make_year,
+                reg_year,
+                created_at,
+                updated_at
+            FROM cars
+            ORDER BY created_at DESC
+        `);
         res.json(result.rows);
     } catch (err) {
         res.status(500).json({ error: err.message });
