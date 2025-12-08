@@ -55,6 +55,7 @@ export const getCars = async (req, res) => {
                 ownership,
                 engine_displacement,
                 highway_mileage,
+                is_on_hold,
                 make_year,
                 reg_year,
                 created_at,
@@ -112,6 +113,31 @@ export const deleteCar = async (req, res) => {
     } catch (error) {
         console.error("Error deleting car:", error);
         res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+// Update hold status
+export const updateCarHoldStatus = async (req, res) => {
+    const { id } = req.params;
+    const { is_on_hold } = req.body;
+
+    if (typeof is_on_hold !== "boolean") {
+        return res.status(400).json({ message: "Invalid status value. Must be boolean." });
+    }
+
+    try {
+        const result = await pool.query(
+            `UPDATE cars SET is_on_hold = $1, updated_at = NOW() WHERE id = $2 RETURNING *`,
+            [is_on_hold, id]
+        );
+
+        if (result.rowCount === 0) {
+            return res.status(404).json({ message: "Car not found" });
+        }
+
+        return res.json({ message: "Car hold status updated", car: result.rows[0] });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
     }
 };
 

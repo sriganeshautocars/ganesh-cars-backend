@@ -19,7 +19,7 @@ const corsOptions = {
         }
     },
     credentials: true,         // allow cookies & authorization headers
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
 };
 
 
