@@ -2,10 +2,12 @@
   "name": "ganesh-cars-backend",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/server.js",
-    "start": " node src/server.js"
+    "start": "node src/server.js",
+    "vercel-build": "echo \"skip build\""
   },
   "repository": {
     "type": "git",

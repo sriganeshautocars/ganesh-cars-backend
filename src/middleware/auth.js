@@ -3,7 +3,13 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export const verifyToken = (req, res, next) => {
+
+    if (req.method === "OPTIONS") {
+        return next();
+    }
+
     const token = req.cookies.auth_token;
+
     if (!token) return res.status(401).json({ message: "Access denied: No token" });
 
     try {

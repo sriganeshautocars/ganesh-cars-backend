@@ -4,7 +4,11 @@ dotenv.config();
 
 const { Pool } = pkg;
 
-export const pool = new Pool({
+const pool = globalThis.__pgPool || new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: { rejectUnauthorized: false }, // Neon requires SSL
 });
+
+globalThis.__pgPool = pool;
+
+export { pool };
