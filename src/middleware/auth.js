@@ -9,6 +9,7 @@ export const verifyToken = (req, res, next) => {
     }
 
     const token = req.cookies.auth_token;
+
     if (!token) return res.status(401).json({ message: "Access denied: No token" });
 
     try {
