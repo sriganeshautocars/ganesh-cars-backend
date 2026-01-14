@@ -24,10 +24,16 @@ const corsOptions = {
 
 
 const app = express();
+
+// CORS Middleware
 app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
+
 app.use(cookieParser());
+
 app.use(express.json({ limit: "10mb" }));
 
+// Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/cars", carRoutes);
 app.use("/api/upload", uploadRoute);
