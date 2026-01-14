@@ -27,7 +27,7 @@ const app = express();
 
 // CORS Middleware
 app.use(cors(corsOptions));
-app.options("/*", cors(corsOptions));
+app.options(/.*/, cors(corsOptions));
 
 app.use(cookieParser());
 
