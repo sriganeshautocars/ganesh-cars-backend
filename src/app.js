@@ -5,7 +5,7 @@ import authRoutes from "./routes/authRoutes.js";
 import carRoutes from "./routes/carRoutes.js";
 import uploadRoute from "./routes/uploadRoute.js";
 
-const allowedOrigins = ['http://localhost:5173', 'https://ganesh-cars-frontend.vercel.app'];
+const allowedOrigins = ['http://localhost:5173', 'https://ganesh-cars-frontend.vercel.app', 'https://sri-ganesh-auto-cars.vercel.app'];
 
 const corsOptions = {
     origin: function (origin, callback) {
