@@ -1,4 +1,4 @@
-### Sri Ganesh Auto Cars Backend
+# Sri Ganesh Auto Cars Backend
 
 Setup
 1. Clone repo
